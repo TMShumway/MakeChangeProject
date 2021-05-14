@@ -18,14 +18,26 @@ public class MakeChange {
 		System.out.print("How much money was tendered? (xx.xx): ");		
 		double amountTendered = scanner.nextDouble();
 		
-		//Display an appropriate message if the customer provided too little money or the exact amount.
-		System.out.println("Warning! Insufficient money provided to pay for the purchase!");		
-		System.out.println("Spot on! Exact amount of money tendered. No change due.");				
+		//Create flags
+		boolean insufficientMoneyFlag = amountTendered < purchasePrice;
+		boolean exactAmountFlag = amountTendered == purchasePrice;
 		
+		//Do stuff
+		
+		
+		//Display an appropriate message if the customer provided too little money or the exact amount.
 		//If the amount tendered is more than the cost of the item, display the number of 
 		//bills and coins that should be given to the customer.
-		System.out.println("Your change comes out to: ");
+		if(insufficientMoneyFlag) {
+			System.out.println("Warning! Insufficient money provided to pay for the purchase!");					
+		} else if(exactAmountFlag) {
+			System.out.println("Spot on! Exact amount of money tendered. No change due.");							
+		} else {
+			System.out.println("Your change comes out to: ");			
+		}
 		
+		
+		scanner.close();
 	}
 
 	private static void printHeader() {
