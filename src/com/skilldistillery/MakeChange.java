@@ -43,13 +43,14 @@ public class MakeChange {
 		System.out.println("-------------------------------------------------------------------------");		
 	}
 
-	private static void calculateChange(double amountTendered, double purchasePrice) {			
-		int amountTenderedCopy = (int)((amountTendered + 0.005) * 100);
+	private static void calculateChange(double amountTendered, double purchasePrice) {
+		//Initialize variables and convert to int
+		//Without rounding before converting, change w/ 1 penny would calculate 2 pennies
+		int amountTenderedCopy = (int)((amountTendered + 0.005) * 100); 
 		int purchasePriceCopy = (int)((purchasePrice + 0.005) * 100);
 		int change = amountTenderedCopy - purchasePriceCopy;
 		int changeCopy = change;
 
-		System.out.println("DELETE ME: " + change);
 		//initialize currency counters
 		int twentyBills = 0; 
 		int tenBills = 0;
@@ -60,7 +61,8 @@ public class MakeChange {
 		int nickels = 0;
 		int pennies = 0;
 
-		//Calculate change...this could also be done with division and modulus and no loop		
+		//Calculate change...this could also be done with division and modulus and no loop	
+		//Greedy algorithm
 		while(change != 0) {               
 			if(change >= 2000) {			  
 				change -= 2000;			  
@@ -88,7 +90,6 @@ public class MakeChange {
 				++pennies;
 			} 
 		}
-		System.out.println("DELETE ME: " + pennies);
 
 		printChange(twentyBills, tenBills, fiveBills, 
 					oneBills, quarters, dimes, 
@@ -102,6 +103,7 @@ public class MakeChange {
 		//Print out change to user
 		System.out.print("\n\t\t\tYour change comes out to: \n");	
 		
+		//Loop used to properly format output statement with commas and period
 		while(change > 0) {
 			if(twentyBills > 0) {
 				System.out.print(twentyBills + " twenty dollar " +
