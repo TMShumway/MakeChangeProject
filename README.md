@@ -6,10 +6,10 @@ appropriate currency.
 
 ### Technologies Used
 
--Java
--Conditionals
--Looping
--methods
+- Java
+- Conditionals
+- Looping
+- Methods
 
 ### How to Run
 This program is a simple java program. As such you are able to run it by opening
@@ -23,4 +23,4 @@ come into this program having already taken a couple of semesters of programming
 courses in Java. With that said, I have still learned quite a bit, even with
 this first project. I often forget to keep my code DRY and as simple as possible.
 This assignment was a great opportunity to reinforce those concepts and to also
-reinforce the fundamentals of Java. 
+reinforce the fundamentals of Java.
