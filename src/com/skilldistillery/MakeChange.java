@@ -8,10 +8,10 @@ public class MakeChange {
 		
 		Scanner scanner = new Scanner(System.in); //instantiate scanner object to read in user input
 		
-		printHeader(); //call method to print welcome header
+		printWelcomeHeader(); //call method to print welcome header
 
 		//The user is prompted asking for the price of the item.
-		System.out.print("What is the price of the item you'd like to purchase?: ");
+		System.out.print("What is the price of the item you'd like to purchase? (xx.xx): ");
 		double purchasePrice = scanner.nextDouble();
 
 		//The user is then prompted asking how much money was tendered by the customer.
@@ -33,17 +33,23 @@ public class MakeChange {
 			calculateChange(amountTendered, purchasePrice); //call method to calculate change
 		}
 		
-		scanner.close();
+		scanner.close(); //housekeeping
 		
-		goodBye();
+		goodBye(); //call method to wave farewell!
 	}
 
-	private static void printHeader() {
+	private static void printWelcomeHeader() {
 		System.out.println("************************* Welcome to MakeChange *************************");
 		System.out.println("-------------------------------------------------------------------------");		
 	}
 
 	private static void calculateChange(double amountTendered, double purchasePrice) {			
+		int amountTenderedCopy = (int)((amountTendered + 0.005) * 100);
+		int purchasePriceCopy = (int)((purchasePrice + 0.005) * 100);
+		int change = amountTenderedCopy - purchasePriceCopy;
+		int changeCopy = change;
+
+		System.out.println("DELETE ME: " + change);
 		//initialize currency counters
 		int twentyBills = 0; 
 		int tenBills = 0;
@@ -53,88 +59,93 @@ public class MakeChange {
 		int dimes = 0;
 		int nickels = 0;
 		int pennies = 0;
-		
-		//calculate amount left over after purchase
-		amountTendered -= purchasePrice;		
 
-		//Convert Dollars and Change to whole numbers
-		int dollars = (int)amountTendered;	
-		int coins = (int)(((amountTendered - dollars) + .005) * 100);
-
-		//Calculate change
-		
-		while(dollars != 0) { 
-			if(dollars >= 20) {
-				dollars -= 20;
-				++twentyBills;
-			} else if (dollars >= 10) {
-				dollars -= 10;
-				++tenBills;
-			} else if(dollars >= 5) {
-				dollars -= 5;
-				++fiveBills;
-			} else if(dollars >= 1) {
-				dollars -= 1;
+		//Calculate change...this could also be done with division and modulus and no loop		
+		while(change != 0) {               
+			if(change >= 2000) {			  
+				change -= 2000;			  
+				++twentyBills;			  
+			} else if (change >= 1000) {   
+				change -= 1000;            
+				++tenBills;               
+			} else if(change >= 500) {     
+				change -= 500;             
+				++fiveBills;              
+			} else if(change >= 100) {     
+				change -= 100;             
 				++oneBills;
-			}
-		}
-			
-		while(coins != 0) {
-			if(coins >= 25) {
-				coins -= 25;
+			} else if(change >= 25) {
+				change -= 25;
 				++quarters;
-			} else if(coins >= 10) {
-				coins -= 10;
+			} else if(change >= 10) {
+				change -= 10;
 				++dimes;
-			} else if(coins >= 5) {
-				coins -= 5;
+			} else if(change >= 5) {
+				change -= 5;
 				++nickels;
-			} else if(coins >= 1) {
-				coins -= 1;
+			} else if(change >= 1) {
+				change -= 1;
 				++pennies;
 			} 
-			
 		}
+		System.out.println("DELETE ME: " + pennies);
 
-	
 		printChange(twentyBills, tenBills, fiveBills, 
 					oneBills, quarters, dimes, 
-					nickels, pennies); //call method to print change results to user 
+					nickels, pennies, changeCopy); //call method to print change results to user 
 	
 	} 
 
 	private static void printChange(int twentyBills, int tenBills, int fiveBills, 
 									int oneBills, int quarters, int dimes, 
-									int nickels, int pennies) {		
+									int nickels, int pennies, int change) {		
 		//Print out change to user
-		System.out.print("\n\tYour change comes out to: \n");	
+		System.out.print("\n\t\t\tYour change comes out to: \n");	
 		
-		if(twentyBills > 0) {
-			System.out.print(twentyBills + " twenty dollar bill(s), ");
+		while(change > 0) {
+			if(twentyBills > 0) {
+				System.out.print(twentyBills + " twenty dollar " +
+			                    (twentyBills > 1 ? "bills" : "bill"));
+				change -= (2000 * twentyBills); 
+				twentyBills = 0;
+			} else if (tenBills > 0) {
+				System.out.print(tenBills + " ten dollar " +
+						        (tenBills > 1 ? "bills" : "bill"));
+				change -= (1000 * tenBills); 
+				tenBills = 0;
+			} else if(fiveBills > 0) {
+				System.out.print(fiveBills + " five dollar " +
+						        (fiveBills > 1 ? "bills" : "bill"));
+				change -= (500 * fiveBills); 
+				fiveBills = 0;
+			} else if(oneBills > 0) {
+				System.out.print(oneBills + " one dollar " +
+								(oneBills > 1 ? "bills" : "bill"));
+				change -= (100 * oneBills);
+				oneBills = 0;
+			} else if(quarters > 0) {
+				System.out.print(quarters + 
+						        (quarters > 1 ? " quarters" : " quarter"));
+				change -= (25 * quarters);
+				quarters = 0;
+			} else if(dimes > 0) {
+				System.out.print(dimes + 
+						        (dimes > 1 ? " dimes" : " dime"));
+				change -= (10 * dimes);				
+				dimes = 0;
+			} else if(nickels > 0) {
+				System.out.print(nickels + 
+						        (nickels > 1 ? " nickels" : " nickel"));
+				change -= (5 * nickels);								
+				nickels = 0;
+			} else if(pennies > 0) {
+				System.out.print(pennies + 
+						        (pennies > 1 ? " pennies" : " penny"));
+				change -= (1 * pennies);												
+				pennies = 0;
+			} 
+			System.out.print(change != 0 ? ", " : ". \n");
 		} 
-		if (tenBills > 0) {
-			System.out.print(tenBills + " ten dollar bill(s), ");
-		} 
-		if(fiveBills > 0) {
-			System.out.print(fiveBills + " five dollar bill(s), ");
-		} 
-		if(oneBills > 0) {
-			System.out.print(oneBills + " one dollar bill(s), ");
-		} 
-		
-		if(quarters > 0) {
-			System.out.print(quarters + " quarters(s), ");
-		} 
-		if(dimes > 0) {
-			System.out.print(dimes + " dimes(s), ");
-		} 
-		if(nickels > 0) {
-			System.out.print(nickels + " nickels(s), ");
-		} 
-		if(pennies > 0) {
-			System.out.print(pennies + " pennies(s), ");
-		}
-		System.out.println();
 	}
 
 	private static void goodBye() {
